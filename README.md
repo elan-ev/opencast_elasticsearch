@@ -14,7 +14,7 @@ Role Variables
 Dependencies
 ------------
 
-This role requires `lkirsoe.opencast_repository`.
+This role requires `lkiesow.opencast_repository`.
 
 
 Example Playbook
