@@ -14,7 +14,7 @@ Role Variables
 Dependencies
 ------------
 
-This role requires `lkiesow.opencast_repository`.
+This role requires `elan.opencast_repository`.
 
 
 Example Playbook
@@ -26,5 +26,5 @@ Example of how to configure and use the role:
 - hosts: servers
   become: true
   roles:
-    - role: lkiesow.opencast_elasticsearch
+    - role: elan.opencast_elasticsearch
 ```
