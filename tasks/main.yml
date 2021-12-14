@@ -6,13 +6,19 @@
     state: present
   when: ansible_os_family == 'Debian'
 
-- name: install aelasticsearch (rhel)
+- name: install elasticsearch (rhel)
   dnf:
     name: elasticsearch-oss
     state: present
     enablerepo: '{{ opencast_repository_identifiers }}'
     update_cache: true
   when: ansible_os_family == 'RedHat'
+
+- name: log4shell mitigation
+  ansible.builtin.copy:
+    content: '-Dlog4j2.formatMsgNoLookups=true'
+    dest: /etc/elasticsearch/jvm.options.d/log4shell.options
+  notify: restart elasticsearch
 
 - name: start and enable elasticsearch service
   service:
