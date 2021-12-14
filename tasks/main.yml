@@ -18,6 +18,9 @@
   ansible.builtin.copy:
     content: '-Dlog4j2.formatMsgNoLookups=true'
     dest: /etc/elasticsearch/jvm.options.d/log4shell.options
+    owner: root
+    group: root
+    mode: '0644'
   notify: restart elasticsearch
 
 - name: start and enable elasticsearch service
