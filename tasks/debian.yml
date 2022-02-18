@@ -1,0 +1,6 @@
+---
+- name: install elasticsearch
+  apt:
+    name: elasticsearch-oss
+    state: present
+  notify: restart elasticsearch
