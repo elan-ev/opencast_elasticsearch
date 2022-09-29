@@ -1,23 +1,23 @@
 ---
 - include_tasks: debian.yml
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == "Debian"
 
 - include_tasks: rhel7.yml
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int == 7
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int == 7
 
 - include_tasks: rhel8.yml
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int > 7
 
-- name: log4shell mitigation
+- name: Apply log4shell mitigation
   ansible.builtin.copy:
-    content: '-Dlog4j2.formatMsgNoLookups=true'
+    content: "-Dlog4j2.formatMsgNoLookups=true"
     dest: /etc/elasticsearch/jvm.options.d/log4shell.options
     owner: root
     group: root
-    mode: '0644'
-  notify: restart elasticsearch
+    mode: "0644"
+  notify: Restart elasticsearch
 
-- name: start and enable elasticsearch service
-  service:
+- name: Start and enable elasticsearch service
+  ansible.builtin.systemd:
     name: elasticsearch
     enabled: true

@@ -1,6 +1,5 @@
 ---
-- name: install elasticsearch
-  apt:
+- name: Install elasticsearch
+  notify: Restart elasticsearch
+  ansible.builtin.apt:
     name: elasticsearch-oss
-    state: present
-  notify: restart elasticsearch

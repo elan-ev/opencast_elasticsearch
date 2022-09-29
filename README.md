@@ -9,7 +9,7 @@ Role Variables
 
 - `opencast_repository_identifiers`
     - List of repository identifiers to temporarily activate for integration
-	 - Will usually be provided by the `opencast_repository` role
+	 - Will usually be provided by the [elan.opencast_repository](https://github.com/elan-ev/opencast_repository) role
 
 Dependencies
 ------------
