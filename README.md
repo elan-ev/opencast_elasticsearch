@@ -8,8 +8,11 @@ Role Variables
 --------------
 
 - `opencast_repository_identifiers`
-    - List of repository identifiers to temporarily activate for integration
-	 - Will usually be provided by the [elan.opencast_repository](https://github.com/elan-ev/opencast_repository) role
+  - List of repository identifiers to temporarily activate for integration
+  - Will usually be provided by the [elan.opencast_repository](https://github.com/elan-ev/opencast_repository) role
+- `opencast_elasticsearch_heap_size`
+  - Memory configuration (default: `1g`)
+  - Might make sense to set this to `2g` for larger installations.
 
 Dependencies
 ------------

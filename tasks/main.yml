@@ -1,11 +1,14 @@
 ---
-- include_tasks: debian.yml
+- name: Debian specific tasks
+  ansible.builtin.include_tasks: debian.yml
   when: ansible_os_family == "Debian"
 
-- include_tasks: rhel7.yml
+- name: EL7 specific tasks
+  ansible.builtin.include_tasks: rhel7.yml
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int == 7
 
-- include_tasks: rhel8.yml
+- name: EL>7 specific tasks
+  ansible.builtin.include_tasks: rhel8.yml
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int > 7
 
 - name: Apply log4shell mitigation
@@ -16,6 +19,16 @@
     group: root
     mode: "0644"
   notify: Restart elasticsearch
+
+- name: Adjust Elasticsearch heap size
+  ansible.builtin.replace:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '^-{{ item }}.*'
+    replace: '-{{ item }}{{ opencast_elasticsearch_heap_size }}'
+  notify: Restart elasticsearch
+  loop:
+    - Xms
+    - Xmx
 
 - name: Start and enable elasticsearch service
   ansible.builtin.systemd:
