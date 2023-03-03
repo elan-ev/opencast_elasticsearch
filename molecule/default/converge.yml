@@ -3,6 +3,7 @@
   hosts: all
   vars:
     opencast_version_major: 13
+    opencast_repository_enabled_release: true
   tasks:
     - name: Include opencast_elasticsearch
       ansible.builtin.include_role:

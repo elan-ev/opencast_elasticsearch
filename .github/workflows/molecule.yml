@@ -1,0 +1,46 @@
+---
+name: Molecule tests
+
+on:  # yamllint disable-line rule:truthy
+  - workflow_dispatch
+  - pull_request
+
+jobs:
+  molecule:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - dist: centos
+            release: 8-Stream
+          - dist: centos
+            release: 9-Stream
+          - dist: debian
+            release: buster
+          - dist: debian
+            release: bullseye
+          - dist: ubuntu
+            release: bionic
+          - dist: ubuntu
+            release: focal
+          - dist: ubuntu
+            release: jammy
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install dependencies
+        run: pip3 install ansible ansible-lint yamllint molecule
+
+      - name: install roles from galaxy
+        run: ansible-galaxy install elan.opencast_repository
+
+      - name: create lxc container
+        uses: lkiesow/setup-lxc-container@v1
+        with:
+          dist: ${{ matrix.os.dist }}
+          release: ${{ matrix.os.release }}
+
+      - name: run molecule tests
+        run: molecule test
